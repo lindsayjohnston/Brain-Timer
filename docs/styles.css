@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Muli:ital,wght@0,400;0,900;1,700&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Muli', sans-serif;
+    text-align: center;
+}
+
+div{
+    padding: 10px;
+}
+
+ul{
+    text-align: left;
+    list-style: none;
+}
+
+
+#cat-gif{
+    height: 300px;
+}
+
+#main{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+}
+
+.section-title{
+    width: 100%;
+}
+
+#task-section{
+    border-style: dotted;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    
+}
+
+#completed-section{
+    border-style: dotted;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
