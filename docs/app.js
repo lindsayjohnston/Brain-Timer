@@ -5,6 +5,13 @@ const input=document.querySelector("#task-input");
 const taskList=document.querySelector(".task-collection");
 const clearButton=document.querySelector("#clear-btn");
 const chosenTaskArea=document.querySelector("#chosen-task");
+const timerForm=document.querySelector("#timer-form");
+const time= document.querySelector("#input-time");
+const countdownArea=document.querySelector('#countdown');
+let secondsLeft;
+let timerOn= true;
+const pauseButton=document.querySelector("#pause-btn");
+
 
 
 setEventListeners();
@@ -14,6 +21,8 @@ function setEventListeners(){
     form.addEventListener('submit', addNewTask);
     taskList.addEventListener('click', taskListClick);
     clearButton.addEventListener('click', clearTasks);
+    timerForm.addEventListener('submit', startTimer);
+    pauseButton.addEventListener('click', pauseTimer);
 
 }
 
@@ -99,7 +108,40 @@ function clearTasks(event){
     }
 }
 
-//CHOOSE TASK{
-function chooseTask(event){
-    alert("YOu CHOOSE!");
+
+//TIMERS
+
+function startTimer(event, seconds){
+    
+    if(timerOn){
+        if(secondsLeft===0){
+            return alert("You finished!");
+        }
+        if(seconds===undefined && event !== null){
+            secondsLeft=time.value * 60; 
+            time.value='';
+            event.preventDefault();
+        } else{
+            secondsLeft=seconds;
+            console.log(secondsLeft);
+        }
+        let minutes= Math.floor(secondsLeft /60);
+        let secondsLeftOver= secondsLeft % 60;
+    
+        countdownArea.firstChild.remove();
+        let p= document.createElement('p');
+        p.append(document.createTextNode(minutes + ":" + secondsLeftOver));
+        countdownArea.prepend(p);
+    
+        t=setTimeout(function(){
+            secondsLeft-= 1;
+            startTimer(null, secondsLeft);
+        }, 1000);
+
+    }
+
+}
+
+function pauseTimer(event){
+    timerOn=false;
 }

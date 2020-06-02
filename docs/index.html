@@ -24,7 +24,18 @@
         </div>
         <div id="timer-div">
             <h2>Timer:</h2>
-            <div id="timer"></div>
+            <div id="timer">
+                <form id="timer-form">
+                    <label for="time">How many minutes do you want to work on this task?</label>
+                    <br>
+                    <input id="input-time" type="text">
+                    <input id="start-button" type="submit" value="Start Timer!">
+                </form>
+                <div id="countdown">
+                    <p>COUNTDOWN!</p>
+                    <button id="pause-btn">Pause</button>
+                </div>
+            </div>
         </div>
         
     </section>
@@ -34,7 +45,7 @@
             <h2 class="section-title">Today I Want To:</h2 >
                 <form id="task-form">
                     <input type="text" id="task-input">
-                    <input type="submit">
+                    <input value="Add Task" type="submit">
                 </form>
             <ul class="task-collection"></ul>
             <button id="clear-btn">Clear Tasks</button>
@@ -51,12 +62,6 @@
     </section>
 
     
-
-    
-    
-    <div id="success-section">
-        SUCCESS!
-    </div>
     <footer>
         Lindsay Johnston Copyright 2020
     </footer>
