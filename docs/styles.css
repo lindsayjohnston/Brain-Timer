@@ -21,39 +21,48 @@ ul{
 button{
     padding: 5px 10px;
     max-height: 20px;
-}
-
-
-#cat-gif{
-    height: 300px;
-}
-
-#main{
-    display: grid;
-    grid-template-columns: 1fr 1fr ;
+    
 }
 
 .section-title{
     width: 100%;
 }
 
-#task-section{
+#cat-gif{
+    height: 300px;
+}
+
+#lists{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+}
+
+/* SECTIONS IN BOXES*/
+
+#working-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: none;
+}
+
+
+#task-section, #current-task-div{
     border-style: dotted;
     grid-column-start: 1;
     grid-column-end: 2;
-    
 }
 
-#completed-section{
+#completed-section, #timer-div{
     border-style: dotted;
     grid-column-start: 2;
     grid-column-end: 3;
 }
 
-
+/* BOX ITEMS */
 .task-item{
     display: grid;
     grid-template-columns: 3fr 1fr 1fr;
     justify-content: center;
     align-items: center;
 }
+
