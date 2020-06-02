@@ -16,12 +16,6 @@
 
     <div id="clock-section">
         <img src="https://media0.giphy.com/media/xT1XGLSb5E1VjIUw4E/giphy.gif?cid=ecf05e47d575887241aeaadac2b0c50f806ec1cf21a85f53&rid=giphy.gif" alt="clock" id="cat-gif">
-        <form>
-            <label for="chosen-task">Choose a task:</label>
-            <input type="text" id="task-filter">
-            <input type="submit">
-            <div id="countdown">CountDown goes here: 25:00</div>
-        </form>
     </div>
 
     <section id="main">
@@ -32,6 +26,7 @@
                     <input type="submit">
                 </form>
             <ul class="task-collection"></ul>
+            <button id="clear-btn">Clear Tasks</button>
         </div>
     
         <div id="completed-section">
@@ -42,8 +37,12 @@
                 <li>Work/Break Ratio</li>
             </ul>
         </div>
-
     </section>
+
+    <div id="choose-section">
+        <h2>Current Task:</h2>
+        <div id="chosen-task"></div>
+    </div>
 
     
     

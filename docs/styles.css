@@ -18,6 +18,11 @@ ul{
     list-style: none;
 }
 
+button{
+    padding: 5px 10px;
+    max-height: 20px;
+}
+
 
 #cat-gif{
     height: 300px;
@@ -45,3 +50,10 @@ ul{
     grid-column-end: 3;
 }
 
+
+.task-item{
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
