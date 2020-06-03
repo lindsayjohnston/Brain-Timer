@@ -22,7 +22,7 @@ function setEventListeners(){
     taskList.addEventListener('click', taskListClick);
     clearButton.addEventListener('click', clearTasks);
     timerForm.addEventListener('submit', startTimer);
-    pauseButton.addEventListener('click', pauseTimer);
+    pauseButton.addEventListener('click', pauseRestartTimer);
 
 }
 
@@ -114,7 +114,7 @@ function clearTasks(event){
 function startTimer(event, seconds){
     
     if(timerOn){
-        if(secondsLeft===0){
+        if(secondsLeft===-1){
             return alert("You finished!");
         }
         if(seconds===undefined && event !== null){
@@ -123,7 +123,6 @@ function startTimer(event, seconds){
             event.preventDefault();
         } else{
             secondsLeft=seconds;
-            console.log(secondsLeft);
         }
         let minutes= Math.floor(secondsLeft /60);
         let secondsLeftOver= secondsLeft % 60;
@@ -142,6 +141,13 @@ function startTimer(event, seconds){
 
 }
 
-function pauseTimer(event){
-    timerOn=false;
+function pauseRestartTimer(event){
+    if(timerOn){
+        timerOn=false;
+        pauseButton.textContent= 'Restart';
+    } else{
+        timerOn=true;
+        pauseButton.textContent='Pause';
+        startTimer(null, secondsLeft);
+    }
 }
