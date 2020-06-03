@@ -246,7 +246,9 @@ function finishedPrompt() {
 
 function finishTask() {
     let chosenTask = chosenTaskArea.textContent;
-    completedCollection.appendChild(document.createTextNode(chosenTask));
+    let li=document.createElement('li');
+    li.appendChild(document.createTextNode(chosenTask));
+    completedCollection.appendChild(li);
     chosenTaskArea.textContent = '';
     ///DELETE FROM T0_DO LIST
     document.querySelectorAll(".task-item").forEach(function (taskItem) {
@@ -255,6 +257,9 @@ function finishTask() {
             taskItem.remove();
         }
     })
+    //DELETE FROM LS
+    removeTaskFromLocalStorage(chosenTask);
+
     finishedPromptBox.classList.add("hidden");
 
 }
