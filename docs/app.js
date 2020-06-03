@@ -115,6 +115,9 @@ function loadTasksFromLocalStorage() {
     }
 }
 
+function storeCurrentTaskInLocalStorage(task){
+    localStorage.setItem('current task', task);
+}
 function storeTaskInLocalStorage(task) {
     let tasks;
     if (localStorage.getItem('tasks') === null) {
@@ -135,7 +138,10 @@ function removeTaskFromLocalStorage(taskToRemove) {
     })
 
     localStorage.setItem('tasks', JSON.stringify(tasks));
-
+    if(localStorage.getItem('current task')=== taskToRemove){
+        localStorage.removeItem('current task');
+        chosenTaskArea.textContent='';
+    }
 }
 
 function removeAllTasksFromLocalStorage() {
@@ -159,6 +165,7 @@ function taskListClick(event) {
         }
         let chosenTaskText = event.target.parentElement.firstChild.firstChild.textContent;
         chosenTaskArea.appendChild(document.createTextNode(chosenTaskText));
+        storeCurrentTaskInLocalStorage(chosenTaskText);
     }
 
 }
@@ -186,49 +193,49 @@ function clearCompletedTasks(event) {
 //TIMERS
 
 function startTimer(event, seconds) {
-    integerTime = parseInt(time.value);
     if(chosenTaskArea.firstChild === null){
-        return alert("Choose a task to work on!");
-    }
-    if (time.value === '' && !timerOn ) {
-        return alert("Enter the number of minutes!");
-    }
-    if (event !== undefined && isNaN(integerTime) && !timerOn) {
-        integerTime = 1;
-        return alert("Enter a valid number!");
-    } if (event !== undefined && !seconds) {
-        timerOn = true;
-    }
-
-
-    if (timerOn) {
-        if (secondsLeft === -1) {
-            alert("You finished!");
-            return finishedPrompt();
-        } else if (seconds === undefined && event !== null) {
-            secondsLeft = time.value * 60;
-            time.value = '';
-            event.preventDefault();
+        alert("Choose a task to work on!");
+    } else {
+        if (time.value === '' && !timerOn && chosenTaskArea.firstChild !== null) {
+            alert("Enter the number of minutes!");
         } else {
-            secondsLeft = seconds;
-        }
-        let minutes = Math.floor(secondsLeft / 60);
-        let secondsLeftOver = secondsLeft % 60;
-
-        countdownArea.firstChild.remove();
-        let p = document.createElement('p');
-        p.append(document.createTextNode(minutes + ":" + secondsLeftOver));
-        countdownArea.prepend(p);
-
-        t = setTimeout(function () {
-            if (timerOn) {
-                secondsLeft -= 1;
-                startTimer(null, secondsLeft);
+            if (event !== undefined && isNaN(integerTime) && !timerOn) {
+                integerTime = 1;
+                return alert("Enter a valid number!");
+            } if (event !== undefined && !seconds) {
+                timerOn = true;
             }
-        }, 1000);
-
-    }
-
+        
+        
+            if (timerOn) {
+                if (secondsLeft === -1) {
+                    alert("You finished!");
+                    return finishedPrompt();
+                } else if (seconds === undefined && event !== null) {
+                    secondsLeft = time.value * 60;
+                    time.value = '';
+                    event.preventDefault();
+                } else {
+                    secondsLeft = seconds;
+                }
+                let minutes = Math.floor(secondsLeft / 60);
+                let secondsLeftOver = secondsLeft % 60;
+        
+                countdownArea.firstChild.remove();
+                let p = document.createElement('p');
+                p.append(document.createTextNode(minutes + ":" + secondsLeftOver));
+                countdownArea.prepend(p);
+        
+                t = setTimeout(function () {
+                    if (timerOn) {
+                        secondsLeft -= 1;
+                        startTimer(null, secondsLeft);
+                    }
+                }, 1000);
+        
+            }
+        }
+    }   
 }
 
 function pauseRestartTimer(event) {
