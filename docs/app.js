@@ -35,6 +35,9 @@ function setEventListeners(){
 
 }
 
+
+
+
 //LOAD DATE AND TIME
 
 function loadDateTime(){
@@ -82,9 +85,35 @@ function addNewTask(event){
         link.innerHTML='<i class="fa fa-remove"></i>';
         li.appendChild(link);
         taskList.appendChild(li);
+        storeTaskInLocalStorage(input.value);
         input.value='';
     }
     event.preventDefault();
+}
+
+///LOCAL STORAGE
+
+function storeTaskInLocalStorage(task){
+    let tasks;
+    if(localStorage.getItem('tasks')===null){
+        tasks=[];
+    } else{
+        tasks=JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function removeTaskFromLocalStorage(taskToRemove){
+    let tasks=JSON.parse(localStorage.getItem('tasks'));
+    tasks.forEach(function(task, index){
+        if(taskToRemove===task){
+            tasks.splice(index, 1);
+        }
+    })
+    
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    
 }
 
 //TASK LIST CLICKS
@@ -95,6 +124,7 @@ function taskListClick(event){
     if(event.target.classList.contains('fa-remove')){
         if(confirm('Are you sure you want to delete this task?')){
             event.target.parentElement.parentElement.remove();
+            removeTaskFromLocalStorage(event.target.parentElement.parentElement.firstChild.textContent);
         }
     }
     if(event.target.classList.contains("choose-btn")){
