@@ -7,9 +7,10 @@ const clearButton=document.querySelector("#clear-btn");
 const chosenTaskArea=document.querySelector("#chosen-task");
 const timerForm=document.querySelector("#timer-form");
 const time= document.querySelector("#input-time");
+let integerTime; 
 const countdownArea=document.querySelector('#countdown');
 let secondsLeft;
-let timerOn= true;
+let timerOn= false;
 const pauseButton=document.querySelector("#pause-btn");
 
 
@@ -112,18 +113,29 @@ function clearTasks(event){
 //TIMERS
 
 function startTimer(event, seconds){
+    integerTime=parseInt(time.value);
+    
+    if(time.value==='' && !timerOn){
+        return alert("Enter the number of minutes!");
+    }
+    if(event !== undefined && isNaN(integerTime) && !timerOn){
+        integerTime=1;
+        return alert("Enter a valid number!");
+    } if(event !== undefined && !seconds){
+        timerOn=true;
+    }
+
     
     if(timerOn){
         if(secondsLeft===-1){
             return alert("You finished!");
-        }
-        if(seconds===undefined && event !== null){
+        } else if(seconds===undefined && event !== null){
             secondsLeft=time.value * 60; 
             time.value='';
             event.preventDefault();
         } else{
             secondsLeft=seconds;
-        }
+        } 
         let minutes= Math.floor(secondsLeft /60);
         let secondsLeftOver= secondsLeft % 60;
     
@@ -133,8 +145,10 @@ function startTimer(event, seconds){
         countdownArea.prepend(p);
     
         t=setTimeout(function(){
-            secondsLeft-= 1;
-            startTimer(null, secondsLeft);
+            if(timerOn){
+                secondsLeft-= 1;
+                startTimer(null, secondsLeft);
+            }
         }, 1000);
 
     }
@@ -143,11 +157,11 @@ function startTimer(event, seconds){
 
 function pauseRestartTimer(event){
     if(timerOn){
-        timerOn=false;
         pauseButton.textContent= 'Restart';
+        timerOn=false;
     } else{
         timerOn=true;
         pauseButton.textContent='Pause';
-        startTimer(null, secondsLeft);
+        startTimer(undefined, secondsLeft);
     }
 }
