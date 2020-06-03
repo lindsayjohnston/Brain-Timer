@@ -187,8 +187,10 @@ function clearCompletedTasks(event) {
 
 function startTimer(event, seconds) {
     integerTime = parseInt(time.value);
-
-    if (time.value === '' && !timerOn) {
+    if(chosenTaskArea.firstChild === null){
+        return alert("Choose a task to work on!");
+    }
+    if (time.value === '' && !timerOn ) {
         return alert("Enter the number of minutes!");
     }
     if (event !== undefined && isNaN(integerTime) && !timerOn) {
