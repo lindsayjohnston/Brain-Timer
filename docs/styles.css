@@ -4,10 +4,15 @@
     box-sizing: border-box;
 }
 
+.hidden{
+    display: none;
+}
+
 body{
     font-family: 'Muli', sans-serif;
     text-align: center;
 }
+
 
 div{
     padding: 10px;
@@ -32,37 +37,20 @@ button{
     height: 300px;
 }
 
-#lists{
-    display: grid;
-    grid-template-columns: 1fr 1fr ;
-}
 
-/* SECTIONS IN BOXES*/
-
-#working-section{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: none;
+/* ROWS*/
+section{
+    display: flex;
+    justify-content: space-around;
 }
 
 
-#task-section, #current-task-div{
-    border-style: dotted;
-    grid-column-start: 1;
-    grid-column-end: 2;
-}
 
-#completed-section, #timer-div{
-    border-style: dotted;
-    grid-column-start: 2;
-    grid-column-end: 3;
-}
 
 /* BOX ITEMS */
-.task-item{
-    display: grid;
-    grid-template-columns: 3fr 1fr 1fr;
-    justify-content: center;
-    align-items: center;
+
+.box{
+    border-style: dotted;
+    width: 50%;
 }
 

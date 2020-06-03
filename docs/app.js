@@ -12,6 +12,11 @@ const countdownArea=document.querySelector('#countdown');
 let secondsLeft;
 let timerOn= false;
 const pauseButton=document.querySelector("#pause-btn");
+const finishedPromptBox= document.querySelector("#finished-prompt");
+const yesButton=document.querySelector(".yes-btn");
+const noButton=document.querySelector(".no-btn");
+const completedCollection=document.querySelector(".completed-collection");
+const clearCompletedButton=document.querySelector("#clear-completed");
 
 
 
@@ -24,6 +29,9 @@ function setEventListeners(){
     clearButton.addEventListener('click', clearTasks);
     timerForm.addEventListener('submit', startTimer);
     pauseButton.addEventListener('click', pauseRestartTimer);
+    yesButton.addEventListener('click', finishTask);
+    noButton.addEventListener('click', returnToTimer);
+    clearCompletedButton.addEventListener('click', clearCompletedTasks);
 
 }
 
@@ -109,6 +117,14 @@ function clearTasks(event){
     }
 }
 
+function clearCompletedTasks(event){
+    if(confirm("Are you sure you want to clear all the tasks from your list?")){
+        while(completedCollection.firstChild){
+            completedCollection.firstChild.remove();
+        }
+    }
+}
+
 
 //TIMERS
 
@@ -128,7 +144,8 @@ function startTimer(event, seconds){
     
     if(timerOn){
         if(secondsLeft===-1){
-            return alert("You finished!");
+            alert("You finished!");
+            return finishedPrompt();
         } else if(seconds===undefined && event !== null){
             secondsLeft=time.value * 60; 
             time.value='';
@@ -164,4 +181,27 @@ function pauseRestartTimer(event){
         pauseButton.textContent='Pause';
         startTimer(undefined, secondsLeft);
     }
+}
+
+function finishedPrompt(){
+    finishedPromptBox.classList.remove("hidden");
+}
+
+function finishTask(){
+    let chosenTask= chosenTaskArea.textContent;
+    completedCollection.appendChild(document.createTextNode(chosenTask));
+    chosenTaskArea.textContent='';
+    ///DELETE FROM T0_DO LIST
+    document.querySelectorAll(".task-item").forEach(function (taskItem){
+        const item= taskItem.firstChild.textContent.toLowerCase();
+        if(item === chosenTask.toLowerCase()){
+            taskItem.remove();
+        }
+    })
+    finishedPromptBox.classList.add("hidden");
+
+}
+
+function returnToTimer(){
+    finishedPromptBox.classList.add("hidden");
 }
