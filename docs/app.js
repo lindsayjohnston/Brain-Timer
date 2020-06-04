@@ -22,6 +22,7 @@ const clearCompletedButton = document.querySelector("#clear-completed");
 setEventListeners();
 
 function setEventListeners() {
+    document.addEventListener('DOMContentLoaded', loadCompletedTasks);
     document.addEventListener('DOMContentLoaded', loadDateTime);
     document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);
     document.addEventListener('DOMContentLoaded', loadCurrentTaskFromLocalStorage);
@@ -155,7 +156,7 @@ function removeAllTasksFromLocalStorage() {
 
 function addCompletedTaskToLocalStorage(taskToAdd){
     let completedTasks;
-    if(localStorage.getItem('completed')===null){
+    if(!localStorage.getItem('completed')){
         completedTasks=[];
     } else{
         completedTasks=JSON.parse(localStorage.getItem('completed')); ///START HERE!
@@ -163,6 +164,22 @@ function addCompletedTaskToLocalStorage(taskToAdd){
 
     completedTasks.push(taskToAdd);
     localStorage.setItem('completed', JSON.stringify(completedTasks));
+}
+
+function loadCompletedTasks(){
+    if(localStorage.getItem('completed')){
+        let completedTasks=JSON.parse(localStorage.getItem('completed'));
+
+        completedTasks.forEach(function(task){
+            let li=document.createElement('li');
+            li.appendChild(document.createTextNode(task));
+            completedCollection.appendChild(li);
+        })
+    }
+}
+
+function clearCompletedTasksFromLocalStorage(){
+    localStorage.setItem('completed', '');
 }
 
 //TASK LIST CLICKS
@@ -203,6 +220,7 @@ function clearCompletedTasks(event) {
         while (completedCollection.firstChild) {
             completedCollection.firstChild.remove();
         }
+        clearCompletedTasksFromLocalStorage();
     }
 }
 
