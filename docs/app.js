@@ -217,6 +217,8 @@ function startTimer(event, seconds) {
                 if (secondsLeft === -1) {
                     alert("You finished!");
                     timeInput.value = '';
+                    timerOn=false;
+                    secondsLeft=1; //so that it automatically doesn't get back in here if you turn the timer on again on the same task
                     return finishedPrompt();
                 } else if (seconds === undefined && event !== null) {
                     secondsLeft = timeInput.value * 60;
