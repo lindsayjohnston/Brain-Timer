@@ -258,7 +258,10 @@ function startTimer(event, seconds) {
                     secondsLeft = seconds;
                 }
                 let minutes = Math.floor(secondsLeft / 60);
-                let secondsLeftOver = secondsLeft % 60;
+                let secondsLeftOver = Math.floor(secondsLeft % 60);
+                if (secondsLeftOver <10){
+                    secondsLeftOver= '0' + secondsLeftOver;
+                }
         
                 countdownArea.firstChild.remove();
                 let p = document.createElement('p');
@@ -288,6 +291,16 @@ function pauseRestartTimer(event) {
     }
 }
 
+function resetTimers(){
+    if(pauseButton.textContent==='Restart'){
+        pauseButton.textContent='Pause';
+    }
+    countdownArea.firstChild.remove();
+    timeInput.value='';
+    timerOn=false;
+
+}
+
 function finishedPrompt() {
     finishedPromptBox.classList.remove("hidden");
 }
@@ -311,6 +324,8 @@ function finishTask() {
     addCompletedTaskToLocalStorage(chosenTask);
 
     finishedPromptBox.classList.add("hidden");
+
+    resetTimers();
 
 }
 
