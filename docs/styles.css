@@ -33,14 +33,10 @@ div{
     padding: 10px;
 }
 
-ul{
-    text-align: left;
-    list-style: none;
-}
-
-button{
-    padding: 5px 10px;
-    max-height: 20px;
+button, #start-button, #add-button{
+    padding: 5px 10px 5px 10px;
+    font-family: 'Muli', sans-serif;
+    font-size: 1rem;
     
 }
 
@@ -56,6 +52,46 @@ button{
     max-width: 600px;
     text-align: center;
 }
+
+/* LISTS */
+ul{
+    text-align: left;
+    list-style: none;
+    padding-left: 0;
+    min-height: 150px;;
+}
+
+.completed-collection{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.task-item{
+    display: grid;
+    grid-template-columns: 4fr 2fr 1fr;
+}
+
+.task-item p{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.task-item button{
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.task-item a{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 
 
