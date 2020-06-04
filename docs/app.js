@@ -153,6 +153,18 @@ function removeAllTasksFromLocalStorage() {
     localStorage.clear('tasks');
 }
 
+function addCompletedTaskToLocalStorage(taskToAdd){
+    let completedTasks;
+    if(localStorage.getItem('completed')===null){
+        completedTasks=[];
+    } else{
+        completedTasks=JSON.parse(localStorage.getItem('completed')); ///START HERE!
+    }
+
+    completedTasks.push(taskToAdd);
+    localStorage.setItem('completed', JSON.stringify(completedTasks));
+}
+
 //TASK LIST CLICKS
 //REMOVE TASK
 //CHOOSE TASK
@@ -276,6 +288,8 @@ function finishTask() {
     })
     //DELETE FROM LS
     removeTaskFromLocalStorage(chosenTask);
+    //ADD TO LS IN COMPLETED
+    addCompletedTaskToLocalStorage(chosenTask);
 
     finishedPromptBox.classList.add("hidden");
 
