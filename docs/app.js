@@ -6,8 +6,7 @@ const taskList = document.querySelector(".task-collection");
 const clearButton = document.querySelector("#clear-btn");
 const chosenTaskArea = document.querySelector("#chosen-task");
 const timerForm = document.querySelector("#timer-form");
-const time = document.querySelector("#input-time");
-let integerTime;
+const timeInput = document.querySelector("#input-time");
 const countdownArea = document.querySelector('#countdown');
 let secondsLeft;
 let timerOn = false;
@@ -25,6 +24,7 @@ setEventListeners();
 function setEventListeners() {
     document.addEventListener('DOMContentLoaded', loadDateTime);
     document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);
+    document.addEventListener('DOMContentLoaded', loadCurrentTaskFromLocalStorage);
     form.addEventListener('submit', addNewTask);
     taskList.addEventListener('click', taskListClick);
     clearButton.addEventListener('click', clearTasks);
@@ -114,6 +114,11 @@ function loadTasksFromLocalStorage() {
         })
     }
 }
+function loadCurrentTaskFromLocalStorage(){
+    if(localStorage.getItem('current task')){
+        chosenTaskArea.append(document.createTextNode(localStorage.getItem('current task')));      
+    }   
+}
 
 function storeCurrentTaskInLocalStorage(task){
     localStorage.setItem('current task', task);
@@ -193,27 +198,28 @@ function clearCompletedTasks(event) {
 //TIMERS
 
 function startTimer(event, seconds) {
+    let parsedInput=parseFloat(timeInput.value);
+
     if(chosenTaskArea.firstChild === null){
         alert("Choose a task to work on!");
+    } else if (timeInput.value === '' && !timerOn) {
+        alert("Enter the number of minutes!");
+    } else if(!parsedInput || parsedInput <= 0 && !timerOn) {
+        alert("Enter a valid number!");
+        timeInput.value='';
     } else {
-        if (time.value === '' && !timerOn && chosenTaskArea.firstChild !== null) {
-            alert("Enter the number of minutes!");
-        } else {
-            if (event !== undefined && isNaN(integerTime) && !timerOn) {
-                integerTime = 1;
-                return alert("Enter a valid number!");
-            } if (event !== undefined && !seconds) {
-                timerOn = true;
-            }
-        
-        
+        if(event !== undefined && !seconds){
+            timerOn = true;
+        }  
+    }
+
             if (timerOn) {
                 if (secondsLeft === -1) {
                     alert("You finished!");
+                    timeInput.value = '';
                     return finishedPrompt();
                 } else if (seconds === undefined && event !== null) {
-                    secondsLeft = time.value * 60;
-                    time.value = '';
+                    secondsLeft = timeInput.value * 60;
                     event.preventDefault();
                 } else {
                     secondsLeft = seconds;
@@ -234,9 +240,9 @@ function startTimer(event, seconds) {
                 }, 1000);
         
             }
-        }
-    }   
 }
+  
+
 
 function pauseRestartTimer(event) {
     if (timerOn) {
