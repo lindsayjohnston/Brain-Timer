@@ -4,15 +4,30 @@
     box-sizing: border-box;
 }
 
-/* .hidden{
+.hidden{
     display: none;
-} */
+}
 
 body{
     font-family: 'Muli', sans-serif;
     text-align: center;
 }
 
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.full-row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.half-vw{
+    margin: 0px 10px;
+}
 
 div{
     padding: 10px;
@@ -36,6 +51,12 @@ button{
 #cat-gif{
     height: 300px;
 }
+
+#explanation{
+    max-width: 600px;
+    text-align: center;
+}
+
 
 
 /* ROWS*/

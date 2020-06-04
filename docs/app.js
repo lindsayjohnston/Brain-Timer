@@ -16,6 +16,7 @@ const yesButton = document.querySelector(".yes-btn");
 const noButton = document.querySelector(".no-btn");
 const completedCollection = document.querySelector(".completed-collection");
 const clearCompletedButton = document.querySelector("#clear-completed");
+const catDiv= document.querySelector("#cat-div");
 
 
 
@@ -46,9 +47,14 @@ function loadDateTime() {
     let date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
+    let amPM= 'AM';
     minutes = checkTime(minutes);
     hours = checkTime(hours);
-    let time = hours + ":" + minutes;
+    if(hours> 12){
+        hours=hours-12;
+        amPM= "PM";
+    }
+    let time = hours + ":" + minutes + " " + amPM;
     date = date.toDateString();
 
     dateArea.innerHTML = date;
@@ -283,9 +289,13 @@ function startTimer(event, seconds) {
 function pauseRestartTimer(event) {
     if (timerOn) {
         pauseButton.textContent = 'Restart';
+        catDiv.classList.add('hidden');
+        finishedPromptBox.classList.remove('hidden');
         timerOn = false;
     } else {
         timerOn = true;
+        finishedPromptBox.classList.add("hidden");
+        catDiv.classList.remove("hidden");
         pauseButton.textContent = 'Pause';
         startTimer(undefined, secondsLeft);
     }
@@ -302,6 +312,7 @@ function resetTimers(){
 }
 
 function finishedPrompt() {
+    catDiv.classList.add("hidden");
     finishedPromptBox.classList.remove("hidden");
 }
 
@@ -323,7 +334,8 @@ function finishTask() {
     //ADD TO LS IN COMPLETED
     addCompletedTaskToLocalStorage(chosenTask);
 
-    finishedPromptBox.classList.add("hidden");
+    finishedPromptBox.classList.add("hidden")
+    catDiv.classList.remove("hidden");
 
     resetTimers();
 
@@ -331,4 +343,5 @@ function finishTask() {
 
 function returnToTimer() {
     finishedPromptBox.classList.add("hidden");
+    catDiv.classList.remove("hidden");
 }
