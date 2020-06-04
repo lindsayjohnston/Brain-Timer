@@ -244,11 +244,12 @@ function startTimer(event, seconds) {
     }
 
             if (timerOn) {
-                if (secondsLeft === -1) {
+                if (secondsLeft <0) {
                     alert("You finished!");
                     timeInput.value = '';
                     timerOn=false;
                     secondsLeft=1; //so that it automatically doesn't get back in here if you turn the timer on again on the same task
+                    countdownArea.firstChild.textContent='';
                     return finishedPrompt();
                 } else if (seconds === undefined && event !== null) {
                     secondsLeft = timeInput.value * 60;
